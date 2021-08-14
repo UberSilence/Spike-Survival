@@ -1,7 +1,7 @@
 #include "include/utils.h"
+#include <cstdlib>
 
 void clearScreen() {
-    #include <stdlib.h>
     #ifdef _WIN32
         system("cls");
     #else
