@@ -1,11 +1,11 @@
 #include <iostream>
 #include <conio.h>
-
-void clearscreen() {
-    system("cls");
-}
+#include <windows.h>
+#include "include/utils.h"
 
 int main() {
+    SetConsoleCP(437);
+    SetConsoleOutputCP(437);
     char map[20][20];
     int score = 0;
     for (int i = 0; i < 20; i++) {
@@ -63,7 +63,7 @@ int main() {
                 break;
         }
 
-        if (map[x][y] == '*') {
+        if (map[x][y] == char(4)) {
             std::cout << "You lost!\n";
             std::cout << "Your score was: " << score << std::endl;
             getch();
@@ -71,7 +71,7 @@ int main() {
         } else {
             map[x][y] = '@';
         }
-        clearscreen();
+        clearScreen();
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
                 std::cout << map[i][j];
@@ -81,11 +81,11 @@ int main() {
 
         int x2 = rand() % 20;
         int y2 = rand() % 20;
-        while (x2 == 0 || x2 == 19 || y2 == 0 || y2 == 19 || map[x2][y2] == '#' || map[x2][y2] == '*') {
+        while (map[x2][y2] == '#' || map[x2][y2] == char(4)) {
             x2 = rand() % 20;
             y2 = rand() % 20;
         }
-        map[x2][y2] = '*';
+        map[x2][y2] = char(4);
         score++;
         std::cout << "Score: " << score << std::endl;
     }
