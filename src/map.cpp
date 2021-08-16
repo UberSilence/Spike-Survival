@@ -30,11 +30,12 @@ void Map::initialize() {
     }
 
     for (int i = 1; i < cols-1; i++) {
-        map[0][i] = border_top;
-        map[rows-1][i] = border_bottom;
+        map[0][i] = border_bottom;
+        map[rows-1][i] = border_top;
     }
 
-    map[0][0] = map[0][cols-1] = map[rows-1][0] = map[rows-1][cols-1] = border_corner;
+    map[0][0] = map[0][cols-1] = border_bottom;
+    map[rows-1][0] = map[rows-1][cols-1] = border_top;
     
     for (int i = 1; i < rows-1; i++) {
         for (int j = 1; j < cols-1; j++) {
@@ -57,6 +58,13 @@ bool Map::isCharacter(int x, int y, char c) {
         return false;
     else
         return true;
+}
+
+bool Map::isBorder(int x, int y) {
+    if (map[x][y] == border_left || map[x][y] == border_top || map[x][y] == border_right || map[x][y] == border_bottom)
+        return true;
+    else
+        return false;
 }
 
 void Map::setPosition(int x, int y, char c) {

@@ -14,6 +14,7 @@ class Map {
         void print();
         void setSize();
         bool isCharacter(int x, int y, char c);
+        bool isBorder(int x, int y);
         void setPosition(int x, int y, char c);
 };
 

@@ -31,25 +31,25 @@ void Game::run(Map *map) {
         switch (input) {
             case 'a':
                 map->setPosition(x, y, ' ');
-                if (!(map->isCharacter(x, y - 1, border_left))) {
+                if (!(map->isBorder(x, y - 1))) {
                     y--;
                 }
                 break;
             case 'd':
                 map->setPosition(x, y, ' ');
-                if (!(map->isCharacter(x, y + 1, border_left))) {
+                if (!(map->isBorder(x, y + 1))) {
                     y++;
                 }
                 break;
             case 'w':
                 map->setPosition(x, y, ' ');
-                if (!(map->isCharacter(x - 1, y, border_left))) {
+                if (!map->isBorder(x - 1, y)) {
                     x--;
                 }
                 break;
             case 's':
                 map->setPosition(x, y, ' ');
-                if (!(map->isCharacter(x + 1, y, border_left))) {
+                if (!map->isBorder(x + 1, y)) {
                     x++;
                 }
                 break;
@@ -60,7 +60,7 @@ void Game::run(Map *map) {
                 break;
         }
 
-        if (map->isCharacter(x, y, player_character)) {
+        if (map->isCharacter(x, y, spike)) {
             std::cout << "You lost!\n";
             std::cout << "Your score was: " << score << std::endl;
             getch();
