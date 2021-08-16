@@ -1,3 +1,5 @@
+#include "map.h"
+
 #ifndef MENU_H
 #define MENU_H
 
@@ -6,8 +8,9 @@ class Menu {
         int choice;
     public:
         Menu();
-        void menu();
-        void start();
+        void menu(Map *map);
+        void start(Map *map);
+        void settings(Map *map);
 };
 
 #endif

@@ -5,6 +5,7 @@
 #include "include/utils.h"
 
 #define player_character char(2)
+#define spike char(4)
 #define border_left char(221)
 #define border_right char(222)
 #define border_top char(223)
@@ -13,60 +14,42 @@
 
 Game::Game() = default;
 
-void Game::run() {
-    char map[20][20];
-    int score = 0;
-    for (int i = 1; i < 19; i++) {
-        map[i][0] = border_left;
-        map[i][19] = border_right;
-    }
+void Game::run(Map *map) {
+    score = 0;
 
-    for (int i = 1; i < 19; i++) {
-        map[0][i] = border_top;
-        map[19][i] = border_bottom;
-    }
-    map[0][0] = map[0][19] = map[19][0] = map[19][19] = border_corner;
-    
-    for (int i = 1; i < 19; i++) {
-        for (int j = 1; j < 19; j++) {
-            map[i][j] = ' ';
-        }
-    }
+    map->initialize();
 
-    for (int i = 0; i < 20; i++) {
-        for (int j = 0; j < 20; j++) {
-            std::cout << map[i][j];
-        }
-        std::cout << std::endl;
-    }
+    int x = 10;
+    int y = 10;
 
-    int x = 5;
-    int y = 5;
+    map->setPosition(x, y, player_character);
+    map->print();
+
     bool gameOver = false;
     while (!gameOver) {
         char input = getch();
         switch (input) {
             case 'a':
-                map[x][y] = ' ';
-                if (map[x][y - 1] != '#') {
+                map->setPosition(x, y, ' ');
+                if (!(map->isCharacter(x, y - 1, border_left))) {
                     y--;
                 }
                 break;
             case 'd':
-                map[x][y] = ' ';
-                if (map[x][y + 1] != '#') {
+                map->setPosition(x, y, ' ');
+                if (!(map->isCharacter(x, y + 1, border_left))) {
                     y++;
                 }
                 break;
             case 'w':
-                map[x][y] = ' ';
-                if (map[x - 1][y] != '#') {
+                map->setPosition(x, y, ' ');
+                if (!(map->isCharacter(x - 1, y, border_left))) {
                     x--;
                 }
                 break;
             case 's':
-                map[x][y] = ' ';
-                if (map[x + 1][y] != '#') {
+                map->setPosition(x, y, ' ');
+                if (!(map->isCharacter(x + 1, y, border_left))) {
                     x++;
                 }
                 break;
@@ -77,29 +60,24 @@ void Game::run() {
                 break;
         }
 
-        if (map[x][y] == char(4)) {
+        if (map->isCharacter(x, y, player_character)) {
             std::cout << "You lost!\n";
             std::cout << "Your score was: " << score << std::endl;
             getch();
             gameOver = true;
         } else {
-            map[x][y] = player_character;
+            map->setPosition(x, y, player_character);
         }
         clearScreen();
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
-                std::cout << map[i][j];
-            }
-            std::cout << std::endl;
-        }
+        map->print();
 
         int x2 = rand() % 18 + 1;
         int y2 = rand() % 18 + 1;
-        while (map[x2][y2] == char(4)) {
+        while (map->isCharacter(x2, y2, spike)) {
             x2 = rand() % 18 + 1;
             y2 = rand() % 18 + 1;
         }
-        map[x2][y2] = char(4);
+        map->setPosition(x2, y2, spike);
         score++;
         std::cout << "Score: " << score << std::endl;
     }
