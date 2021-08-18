@@ -19,8 +19,8 @@ void Game::run(Map *map) {
 
     map->initialize();
 
-    int x = 10;
-    int y = 10;
+    int x = random_number(1, map->getCols() - 2);
+    int y = random_number(1, map->getCols() - 2);
 
     map->setPosition(x, y, player_character);
     map->print();
@@ -68,16 +68,17 @@ void Game::run(Map *map) {
         } else {
             map->setPosition(x, y, player_character);
         }
-        clearScreen();
-        map->print();
 
-        int x2 = rand() % 18 + 1;
-        int y2 = rand() % 18 + 1;
-        while (map->isCharacter(x2, y2, spike)) {
-            x2 = rand() % 18 + 1;
-            y2 = rand() % 18 + 1;
+        int x2 = random_number(1,map->getCols() - 2);
+        int y2 = random_number(1,map->getCols() - 2);
+        while ((map->isCharacter(x2, y2, spike) || map->isCharacter(x2, y2, player_character))) {
+            x2 = random_number(1,map->getCols() - 2);
+            y2 = random_number(1,map->getCols() - 2);
         }
         map->setPosition(x2, y2, spike);
+        clearScreen();
+        map->print();
+        std::cout << "\nAdded aspike at " << x2 << "," << y2 << std::endl;
         score++;
         std::cout << "Score: " << score << std::endl;
     }

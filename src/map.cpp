@@ -70,3 +70,11 @@ bool Map::isBorder(int x, int y) {
 void Map::setPosition(int x, int y, char c) {
     map[x][y] = c;
 }
+
+int Map::getRows() {
+    return rows;
+}
+
+int Map::getCols() {
+    return cols;
+}
